@@ -4,7 +4,7 @@
 HB_FUNC( POINT_SETX )
 {
    // Retrieve the pointer to the Point object from the Harbour object
-   Point * p = ( Point * ) hb_parptr( 1 );
+   Point *p = ( Point * ) hb_parptr( 1 );
 
    // Retrieve the new value for x
    int new_x = hb_parni( 2 );
@@ -18,7 +18,7 @@ HB_FUNC( POINT_SETX )
 HB_FUNC( POINT_GETX )
 {
    // Retrieve the pointer to the Point object from the Harbour object
-   Point * p = ( Point * ) hb_parptr( 1 );
+   Point *p = ( Point * ) hb_parptr( 1 );
 
    if( p )
       hb_retni( p->x );
@@ -28,7 +28,7 @@ HB_FUNC( POINT_GETX )
 HB_FUNC( POINT_SETY )
 {
    // Retrieve the pointer to the Point object from the Harbour object
-   Point * p = ( Point * ) hb_parptr( 1 );
+   Point *p = ( Point * ) hb_parptr( 1 );
 
    // Retrieve the new value for y
    int new_y = hb_parni( 2 );
@@ -42,16 +42,26 @@ HB_FUNC( POINT_SETY )
 HB_FUNC( POINT_GETY )
 {
    // Retrieve the pointer to the Point object from the Harbour object
-   Point * p = ( Point * ) hb_parptr( 1 );
+   Point *p = ( Point * ) hb_parptr( 1 );
 
    if( p )
       hb_retni( p->y );
 }
 
+HB_FUNC( POINT_DESTROY )
+{
+   // Retrieve the pointer to the Point object from the Harbour object
+   Point *p = ( Point * ) hb_parptr( 1 );
+
+   // Free up memory
+   if( p )
+      hb_xfree( p );
+}
+
 // Initialize function
 HB_FUNC( INIT )
 {
-   Point * p = ( Point * ) hb_xgrab( sizeof( Point ) );
+   Point *p = ( Point * ) hb_xgrab( sizeof( Point ) );
    p->x = 10;
    p->y = 20;
 
@@ -63,6 +73,7 @@ HB_FUNC( INIT )
    hb_clsAdd( uiClass, "GetX", hb_dynsymGet( "POINT_GETX" ) );
    hb_clsAdd( uiClass, "SetY", hb_dynsymGet( "POINT_SETY" ) );
    hb_clsAdd( uiClass, "GetY", hb_dynsymGet( "POINT_GETY" ) );
+   hb_clsAdd( uiClass, "Destroy", hb_dynsymGet( "POINT_DESTROY" ) );
 
    // Retrieve the pointer to the class of the object
    PHB_DYNS pDynSym = hb_dynsymFind( "POINT" );

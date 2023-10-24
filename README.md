@@ -1,1 +1,2 @@
-# template-1
+# Harbour Object-Oriented Programming Example
+
