@@ -1,4 +1,5 @@
 PROCEDURE Main()
+
    LOCAL p := INIT()
 
    ? "X:", p:GetX()
@@ -9,5 +10,7 @@ PROCEDURE Main()
 
    ? "X:", p:GetX()
    ? "Y:", p:GetY()
+
+   p:Destroy()
 
 RETURN
