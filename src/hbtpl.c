@@ -3,7 +3,7 @@
 // Set the x value for the Point object
 HB_FUNC_STATIC( POINT_SETX )
 {
-   PHB_ITEM pSelf = hb_param( 0, HB_IT_OBJECT );
+   PHB_ITEM pSelf = hb_stackSelfItem();
    Point *p;
 
    hb_arrayGet( pSelf, 1, hb_stackReturnItem() );
@@ -21,7 +21,7 @@ HB_FUNC_STATIC( POINT_SETX )
 // Get the x value from the Point object
 HB_FUNC_STATIC( POINT_GETX )
 {
-   PHB_ITEM pSelf = hb_param( 0, HB_IT_OBJECT );
+   PHB_ITEM pSelf = hb_stackSelfItem();
    Point *p;
 
    hb_arrayGet( pSelf, 1, hb_stackReturnItem() );
@@ -36,7 +36,7 @@ HB_FUNC_STATIC( POINT_GETX )
 // Set the y value for the Point object
 HB_FUNC_STATIC( POINT_SETY )
 {
-   PHB_ITEM pSelf = hb_param( 0, HB_IT_OBJECT );
+   PHB_ITEM pSelf = hb_stackSelfItem();
    Point *p;
 
    hb_arrayGet( pSelf, 1, hb_stackReturnItem() );
@@ -54,7 +54,7 @@ HB_FUNC_STATIC( POINT_SETY )
 // Get the y value from the Point object
 HB_FUNC_STATIC( POINT_GETY )
 {
-   PHB_ITEM pSelf = hb_param( 0, HB_IT_OBJECT );
+   PHB_ITEM pSelf = hb_stackSelfItem();
    Point *p;
 
    hb_arrayGet( pSelf, 1, hb_stackReturnItem() );
@@ -68,24 +68,24 @@ HB_FUNC_STATIC( POINT_GETY )
 
 HB_FUNC_STATIC( POINT_NEW )
 {
-    PHB_ITEM pSelf = hb_param( 0, HB_IT_OBJECT );
-    Point *p = ( Point * ) hb_xgrab( sizeof( Point ) );
+   PHB_ITEM pSelf = hb_stackSelfItem();
+   Point *p = ( Point * ) hb_xgrab( sizeof( Point ) );
 
-    p->x = 10;
-    p->y = 20;
+   p->x = hb_parni( 1 );
+   p->y = hb_parni( 2 );
 
-    hb_arraySet( pSelf, 1, hb_itemPutPtr( NULL, p ) );
-    hb_itemReturn( pSelf );  // return Self
+   hb_arraySetPtr( pSelf, 1, p );
+   hb_itemReturn( pSelf );  // return Self
 }
 
 HB_FUNC_STATIC( POINT_DESTROY )
 {
-   PHB_ITEM pSelf = hb_param( 0, HB_IT_OBJECT );
+   PHB_ITEM pSelf = hb_stackSelfItem();
    PHB_ITEM p = hb_itemNew( NULL ), pNull;
 
    hb_arrayGet( pSelf, 1, p );
    if( hb_itemGetPtr( p ) )
-       hb_xfree( hb_itemGetPtr( p ) );
+      hb_xfree( hb_itemGetPtr( p ) );
    hb_arraySet( pSelf, 1, pNull = hb_itemPutPtr( NULL, NULL ) );
    hb_itemRelease( p );
    hb_itemRelease( pNull );
@@ -93,7 +93,7 @@ HB_FUNC_STATIC( POINT_DESTROY )
 
 HB_FUNC_STATIC( POINT_GETPOINTDATA )
 {
-   PHB_ITEM pSelf = hb_param( 0, HB_IT_OBJECT );
+   PHB_ITEM pSelf = hb_stackSelfItem();
 
    hb_arrayGet( pSelf, 1, hb_stackReturnItem() );
 }
