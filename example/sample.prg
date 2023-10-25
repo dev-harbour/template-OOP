@@ -1,16 +1,19 @@
 PROCEDURE Main()
 
-   LOCAL p := INIT()
+   LOCAL o := Point():New()
 
-   ? "X:", p:GetX()
-   ? "Y:", p:GetY()
+   ? "X: ", o:x
+   ? "Y: ", o:y
 
-   p:SetX( 100 )
-   p:SetY( 200 )
+   o:x = 25
+   o:y = 50
 
-   ? "X:", p:GetX()
-   ? "Y:", p:GetY()
+   ? "X: ", o:x
+   ? "Y: ", o:y
 
-   p:Destroy()
+   ? "PointData: ", o:PointData
+   o:Destroy()
+
+   ? "PointData: ", o:PointData
 
 RETURN

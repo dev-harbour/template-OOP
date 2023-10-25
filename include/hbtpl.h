@@ -3,9 +3,10 @@
 
 #include <stdio.h>
 
-#include "hbapi.h"
-#include "hbapiitm.h"
-#include "hbapicls.h"
+#include <hbapi.h>
+#include <hbapicls.h>
+#include <hbapiitm.h>
+#include <hbstack.h>
 
 typedef struct
 {

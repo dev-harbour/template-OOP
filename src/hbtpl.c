@@ -1,90 +1,123 @@
 #include "hbtpl.h"
 
 // Set the x value for the Point object
-HB_FUNC( POINT_SETX )
+HB_FUNC_STATIC( POINT_SETX )
 {
-   // Retrieve the pointer to the Point object from the Harbour object
-   Point *p = ( Point * ) hb_parptr( 1 );
+   PHB_ITEM pSelf = hb_param( 0, HB_IT_OBJECT );
+   Point *p;
 
-   // Retrieve the new value for x
-   int new_x = hb_parni( 2 );
+   hb_arrayGet( pSelf, 1, hb_stackReturnItem() );
+   p = hb_parptr( -1 );
 
-   // Set the new value for x
    if( p )
-      p->x = new_x;
+   {
+      hb_retni( p->x );
+      p->x = hb_parni( 1 );
+   }
+   else
+      hb_retni( 0 ); // raise an error ?
 }
 
 // Get the x value from the Point object
-HB_FUNC( POINT_GETX )
+HB_FUNC_STATIC( POINT_GETX )
 {
-   // Retrieve the pointer to the Point object from the Harbour object
-   Point *p = ( Point * ) hb_parptr( 1 );
+   PHB_ITEM pSelf = hb_param( 0, HB_IT_OBJECT );
+   Point *p;
+
+   hb_arrayGet( pSelf, 1, hb_stackReturnItem() );
+   p = hb_parptr( -1 );
 
    if( p )
       hb_retni( p->x );
+   else
+      hb_retni( 0 ); // raise an error ?
 }
 
 // Set the y value for the Point object
-HB_FUNC( POINT_SETY )
+HB_FUNC_STATIC( POINT_SETY )
 {
-   // Retrieve the pointer to the Point object from the Harbour object
-   Point *p = ( Point * ) hb_parptr( 1 );
+   PHB_ITEM pSelf = hb_param( 0, HB_IT_OBJECT );
+   Point *p;
 
-   // Retrieve the new value for y
-   int new_y = hb_parni( 2 );
+   hb_arrayGet( pSelf, 1, hb_stackReturnItem() );
+   p = hb_parptr( -1 );
 
-   // Set the new value for y
    if( p )
-      p->y = new_y;
+   {
+      hb_retni( p->y );
+      p->y = hb_parni( 1 );
+   }
+   else
+      hb_retni( 0 ); // raise an error ?
 }
 
 // Get the y value from the Point object
-HB_FUNC( POINT_GETY )
+HB_FUNC_STATIC( POINT_GETY )
 {
-   // Retrieve the pointer to the Point object from the Harbour object
-   Point *p = ( Point * ) hb_parptr( 1 );
+   PHB_ITEM pSelf = hb_param( 0, HB_IT_OBJECT );
+   Point *p;
+
+   hb_arrayGet( pSelf, 1, hb_stackReturnItem() );
+   p = hb_parptr( -1 );
 
    if( p )
       hb_retni( p->y );
+   else
+      hb_retni( 0 ); // raise an error ?
 }
 
-HB_FUNC( POINT_DESTROY )
+HB_FUNC_STATIC( POINT_NEW )
 {
-   // Retrieve the pointer to the Point object from the Harbour object
-   Point *p = ( Point * ) hb_parptr( 1 );
+    PHB_ITEM pSelf = hb_param( 0, HB_IT_OBJECT );
+    Point *p = ( Point * ) hb_xgrab( sizeof( Point ) );
 
-   // Free up memory
-   if( p )
-      hb_xfree( p );
+    p->x = 10;
+    p->y = 20;
+
+    hb_arraySet( pSelf, 1, hb_itemPutPtr( NULL, p ) );
+    hb_itemReturn( pSelf );  // return Self
 }
 
-// Initialize function
-HB_FUNC( INIT )
+HB_FUNC_STATIC( POINT_DESTROY )
 {
-   Point *p = ( Point * ) hb_xgrab( sizeof( Point ) );
-   p->x = 10;
-   p->y = 20;
+   PHB_ITEM pSelf = hb_param( 0, HB_IT_OBJECT );
+   PHB_ITEM p = hb_itemNew( NULL ), pNull;
 
+   hb_arrayGet( pSelf, 1, p );
+   if( hb_itemGetPtr( p ) )
+       hb_xfree( hb_itemGetPtr( p ) );
+   hb_arraySet( pSelf, 1, pNull = hb_itemPutPtr( NULL, NULL ) );
+   hb_itemRelease( p );
+   hb_itemRelease( pNull );
+}
+
+HB_FUNC_STATIC( POINT_GETPOINTDATA )
+{
+   PHB_ITEM pSelf = hb_param( 0, HB_IT_OBJECT );
+
+   hb_arrayGet( pSelf, 1, hb_stackReturnItem() );
+}
+
+// class creation
+HB_FUNC( POINT )
+{
    // Create class
-   HB_USHORT uiClass = hb_clsCreate( 0, "POINT" );
+   static HB_USHORT uiClass = 0;
 
-   // Add methods to the class
-   hb_clsAdd( uiClass, "SetX", hb_dynsymGet( "POINT_SETX" ) );
-   hb_clsAdd( uiClass, "GetX", hb_dynsymGet( "POINT_GETX" ) );
-   hb_clsAdd( uiClass, "SetY", hb_dynsymGet( "POINT_SETY" ) );
-   hb_clsAdd( uiClass, "GetY", hb_dynsymGet( "POINT_GETY" ) );
-   hb_clsAdd( uiClass, "Destroy", hb_dynsymGet( "POINT_DESTROY" ) );
+   if( uiClass == 0 )
+   {
+      // Create class
+      uiClass = hb_clsCreate( 1, "POINT" );
+      // Add methods to the class
+      hb_clsAdd( uiClass, "POINTDATA", HB_FUNCNAME( POINT_GETPOINTDATA ) );
+      hb_clsAdd( uiClass, "_X", HB_FUNCNAME( POINT_SETX ) );
+      hb_clsAdd( uiClass, "X", HB_FUNCNAME( POINT_GETX ) );
+      hb_clsAdd( uiClass, "_Y", HB_FUNCNAME( POINT_SETY ) );
+      hb_clsAdd( uiClass, "Y", HB_FUNCNAME( POINT_GETY ) );
+      hb_clsAdd( uiClass, "DESTROY", HB_FUNCNAME( POINT_DESTROY ) );
+      hb_clsAdd( uiClass, "NEW", HB_FUNCNAME( POINT_NEW ) );
+   }
 
-   // Retrieve the pointer to the class of the object
-   PHB_DYNS pDynSym = hb_dynsymFind( "POINT" );
-   PHB_ITEM pObject = hb_objSendMsg( pDynSym, "_New", 0, NULL );
-
-   // Associate the class with the object
+   // create the object
    hb_clsAssociate( uiClass );
-
-   // Add the pointer to the Point structure as the object's data
-   // (A different function may be needed here to properly set the object's data)
-   hb_objSetClass( pObject, "POINTDATA", ( void * ) p );
-
-   hb_itemReturnRelease( pObject );
 }
