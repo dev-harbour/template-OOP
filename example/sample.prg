@@ -1,6 +1,6 @@
 PROCEDURE Main()
 
-   LOCAL o := Point():New()
+   LOCAL o := Point():New( 10, 20 )
 
    ? "X: ", o:x
    ? "Y: ", o:y
