@@ -19,14 +19,14 @@ PROCEDURE Main()
    ? "PointData: ", o:PointData
 
    // Set the width of the Point object to 100
-   o:Width = 100
+   o:SetWidth( 100 )
    // Display the current width of the Point object
-   ? "Width: ", o:Width
+   ? "Width: ", o:GetWidth()
 
    // Set the height of the Point object to 200
-   o:Height = 200
+   o:SetHeight( 200 )
    // Display the current height of the Point object
-   ? "Height: ", o:Height
+   ? "Height: ", o:GetHeight()
 
    // Destroy the Point object
    o:Destroy()
