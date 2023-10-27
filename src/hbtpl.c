@@ -78,6 +78,7 @@ HB_FUNC_STATIC( POINT_NEW )
    hb_itemReturn( pSelf );  // return Self
 }
 
+// Destroy a Point object and free its memory
 HB_FUNC_STATIC( POINT_DESTROY )
 {
    PHB_ITEM pSelf = hb_stackSelfItem();
@@ -91,6 +92,7 @@ HB_FUNC_STATIC( POINT_DESTROY )
    hb_itemRelease( pNull );
 }
 
+// Retrieve Point data and place it on the return stack
 HB_FUNC_STATIC( POINT_GETPOINTDATA )
 {
    PHB_ITEM pSelf = hb_stackSelfItem();
