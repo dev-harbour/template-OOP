@@ -171,7 +171,7 @@ HB_FUNC( POINT )
    if( uiClass == 0 )
    {
       // Create class
-      uiClass = hb_clsCreate( 1, "POINT" );
+      uiClass = hb_clsCreate( 1, "POINT" );  // it has just one DATA
       // Add methods to the class
       hb_clsAdd( uiClass, "_X",        HB_FUNCNAME( POINT_SETX ) );
       hb_clsAdd( uiClass, "X",         HB_FUNCNAME( POINT_GETX ) );
