@@ -12,6 +12,8 @@ typedef struct
 {
    int x;
    int y;
+   int width;
+   int height;
 } Point;
 
 #endif /* End HBTPL_H_ */
