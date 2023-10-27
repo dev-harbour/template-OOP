@@ -179,8 +179,8 @@ HB_FUNC( POINT )
       hb_clsAdd( uiClass, "Y",         HB_FUNCNAME( POINT_GETY ) );
       hb_clsAdd( uiClass, "SETWIDTH",  HB_FUNCNAME( POINT_SETWIDTH ) );
       hb_clsAdd( uiClass, "GETWIDTH",  HB_FUNCNAME( POINT_GETWIDTH ) );
-      hb_clsAdd( uiClass, "_HEIGHT",   HB_FUNCNAME( POINT_SETHEIGHT ) );
-      hb_clsAdd( uiClass, "HEIGHT",    HB_FUNCNAME( POINT_GETHEIGHT ) );
+      hb_clsAdd( uiClass, "SETHEIGHT",   HB_FUNCNAME( POINT_SETHEIGHT ) );
+      hb_clsAdd( uiClass, "GETHEIGHT",    HB_FUNCNAME( POINT_GETHEIGHT ) );
       hb_clsAdd( uiClass, "POINTDATA", HB_FUNCNAME( POINT_GETPOINTDATA ) );
       hb_clsAdd( uiClass, "DESTROY",   HB_FUNCNAME( POINT_DESTROY ) );
       hb_clsAdd( uiClass, "NEW",       HB_FUNCNAME( POINT_NEW ) );
