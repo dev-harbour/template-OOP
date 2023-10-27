@@ -11,7 +11,6 @@ HB_FUNC_STATIC( POINT_SETX )
 
    if( p )
    {
-      hb_retni( p->x );
       p->x = hb_parni( 1 );
    }
    else
@@ -44,7 +43,6 @@ HB_FUNC_STATIC( POINT_SETY )
 
    if( p )
    {
-      hb_retni( p->y );
       p->y = hb_parni( 1 );
    }
    else
